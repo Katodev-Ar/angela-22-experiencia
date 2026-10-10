@@ -11,32 +11,53 @@
 <meta property="og:title" content="¡Feliz 22 años! 🎂✨🐾">
 <meta property="og:description" content="Una sorpresa interactiva para celebrar tus 22, con gatitos y mucho cariño.">
 <meta property="og:url" content="https://katodev-ar.github.io/angela-22-experiencia/">
-<meta property="og:image" content="https://katodev-ar.github.io/angela-22-experiencia/media/whatsapp-preview-v2.jpg">
-<meta property="og:image:alt" content="Angela junto a una torta de cumpleaños y sus gatitos en un paisaje pixelado.">
+<meta property="og:image" content="https://katodev-ar.github.io/angela-22-experiencia/media/whatsapp-preview-v3.jpg">
+<meta property="og:image:alt" content="Un gatito pixelado junto a una torta rosa con velitas encendidas.">
 <meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:secure_url" content="https://katodev-ar.github.io/angela-22-experiencia/media/whatsapp-preview-v2.jpg">
+<meta property="og:image:secure_url" content="https://katodev-ar.github.io/angela-22-experiencia/media/whatsapp-preview-v3.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="¡Feliz 22 años! 🎂✨🐾">
 <meta name="twitter:description" content="Una sorpresa interactiva para celebrar tus 22, con gatitos y mucho cariño.">
-<meta name="twitter:image" content="https://katodev-ar.github.io/angela-22-experiencia/media/whatsapp-preview-v2.jpg">
-<meta name="twitter:image:alt" content="Angela junto a una torta de cumpleaños y sus gatitos en un paisaje pixelado.">
+<meta name="twitter:image" content="https://katodev-ar.github.io/angela-22-experiencia/media/whatsapp-preview-v3.jpg">
+<meta name="twitter:image:alt" content="Un gatito pixelado junto a una torta rosa con velitas encendidas.">
 <link rel="preload" href="media/fonts/PixelifySans-Bold.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="stylesheet" href="style.css?v=mobile-whatsapp-20261010">
+<link rel="stylesheet" href="style.css?v=pixel-mobile-v4-20261010">
 </head>
 <body>
+<div class="rotate-overlay" id="rotateOverlay" role="status" aria-live="assertive" aria-hidden="true" inert>
+ <div class="rotate-message">
+  <svg class="rotate-phone" viewBox="0 0 64 64" aria-hidden="true" shape-rendering="crispEdges">
+   <path d="M19 4h26v56H19z" fill="#21132d" stroke="#ffe4a0" stroke-width="4"/>
+   <path d="M25 10h14v38H25z" fill="#49244f"/>
+   <path d="M29 54h6v2h-6z" fill="#ff9cdd"/>
+   <path d="M50 13h8v5h-4v4h-4v-4h-4v-5zM52 18h4v8h-4z" fill="#ff9cdd"/>
+   <path d="M6 43h4v-6h4v-4h6v4h-4v4h-4v6H8v5H4v-5h2z" fill="#ffe3a0"/>
+  </svg>
+  <p>Girá tu celular a vertical</p>
+  <span>La sorpresa empieza cuando la pantalla esté de pie</span>
+ </div>
+</div>
 <img class="ambient" alt="" aria-hidden="true" src="media/scene-poster.jpg">
 <div class="shade" aria-hidden="true"></div>
 <canvas class="ambient-particles" id="ambientParticles" aria-hidden="true"></canvas>
 <canvas class="cursor-particles" id="cursorParticles" aria-hidden="true"></canvas>
 <main class="page" id="page">
  <section class="scene" id="scene" aria-label="Angela celebra sus 22 años con sus gatitos">
-  <video class="scene-video" id="landscape" src="media/landscape.mp4" muted playsinline autoplay loop preload="auto" poster="media/scene-poster.jpg" aria-label="Paisaje de cumpleaños con gatos animados"></video>
+  <video class="scene-video" id="landscape" src="media/landscape.mp4" muted playsinline loop preload="none" poster="media/scene-poster.jpg" aria-label="Paisaje de cumpleaños con gatos animados"></video>
   <video class="scene-video" id="kittyScene" data-src="media/kitty-scene.mp4" muted playsinline preload="none" poster="media/scene-poster.jpg" aria-label="El gatito se acerca a las velitas"></video>
   <video class="scene-video" id="rewindScene" data-src="media/rewind-scene.mp4" muted playsinline preload="none" aria-label="Reversa del video de la carta desde el segundo 30 al 10"></video>
   <canvas class="pixel-fire" id="fireCanvas" width="1280" height="720" aria-hidden="true"></canvas>
-  <img class="angela" id="angela" src="media/angela.png" alt="Angela con su gorrito de cumpleaños y sus gatitos pixelados">
+  <img class="angela" id="angela" src="media/angela.png" alt="Angela con sus gatitos pixelados">
+  <svg class="party-hat" viewBox="0 0 56 48" aria-hidden="true" shape-rendering="crispEdges">
+   <path d="M12 31 20 8h16l10 23z" fill="#ff79c7" stroke="#321c3c" stroke-width="3" stroke-linejoin="miter"/>
+   <path d="M20 8h7v23h-17z" fill="#ff9ddd"/>
+   <path d="M29 15h8v6h-8zM23 24h8v6h-8z" fill="#ffe3a0"/>
+   <path d="M8 31h40v8H8z" fill="#ffe4a0" stroke="#321c3c" stroke-width="3"/>
+   <path d="M24 2h8v7h-8zM21 5h14v5H21z" fill="#fff0ba" stroke="#321c3c" stroke-width="2"/>
+   <path d="M4 19h5v5H4zM47 13h5v5h-5z" fill="#ffb4e8"/>
+  </svg>
   <canvas class="particles" id="particles" width="1280" height="720" aria-hidden="true"></canvas>
   <div class="card-signature" id="cardSignature" role="img" aria-label="Un gatito pixelado caminando. Con cariño, Cristian.">
    <svg class="signature-cat" viewBox="0 0 48 36" aria-hidden="true" shape-rendering="crispEdges">
@@ -61,7 +82,9 @@
 
  <div class="greeting">FELIZ CUMPLEAÑOS, <span>ANGELA</span> · 22 <svg class="greeting-spark" viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges"><rect x="6" y="0" width="4" height="4"/><rect x="2" y="4" width="12" height="4"/><rect x="6" y="8" width="4" height="6"/><rect x="4" y="14" width="8" height="2"/></svg></div>
 <div class="music-controls" role="group" aria-label="Controles de música">
- <button class="music-button" id="musicButton" type="button" aria-label="Activar canción de feliz cumpleaños" aria-pressed="false"><svg class="music-icon" viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges"><rect x="10" y="1" width="3" height="10"/><rect x="6" y="9" width="5" height="3"/><rect x="9" y="2" width="6" height="2"/></svg><span>Activar música</span></button>
+ <button class="music-button" id="musicButton" type="button" aria-label="Activar música" aria-pressed="false" title="Activar o pausar música">
+  <svg class="music-icon" viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges"><rect x="9" y="1" width="3" height="10"/><rect x="5" y="9" width="5" height="3"/><rect x="8" y="2" width="7" height="2"/><path class="music-slash" d="M2 13 13 2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+ </button>
  <label class="volume-control" for="musicVolume" title="Volumen de la música">
   <svg class="volume-icon" viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="6" width="3" height="4"/><rect x="4" y="4" width="3" height="8"/><rect x="7" y="2" width="2" height="12"/><rect x="11" y="5" width="2" height="6"/><rect x="13" y="7" width="2" height="2"/></svg>
   <input id="musicVolume" type="range" min="0" max="1" step="0.01" value="0.62" aria-label="Volumen de la música" aria-valuetext="62%">
@@ -80,6 +103,6 @@
   <rect x="9" y="8" width="2" height="2"/><rect x="11" y="10" width="2" height="2"/><rect x="13" y="12" width="2" height="2"/>
  </svg>
 </button>
-<script src="script.js?v=mobile-whatsapp-20261010"></script>
+<script src="script.js?v=pixel-mobile-v4-20261010"></script>
 </body>
 </html>

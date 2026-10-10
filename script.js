@@ -5,6 +5,14 @@ const cakeHotspot=document.getElementById('cakeHotspot');
 const musicButton=document.getElementById('musicButton');
 const birthdayMusic=document.getElementById('birthdayMusic');
 const musicVolume=document.getElementById('musicVolume');
+const rotateOverlay=document.getElementById('rotateOverlay');
+const page=document.getElementById('page');
+function isPhoneDevice(){
+ const ua=navigator.userAgent||'';
+ return navigator.userAgentData?.mobile===true||/Mobi|iPhone|iPod|Windows Phone/i.test(ua)||(/Android/i.test(ua)&&/Mobile/i.test(ua))||(window.matchMedia('(pointer:coarse)').matches&&Math.min(window.innerWidth,window.innerHeight)<600);
+}
+function needsPortrait(){return isPhoneDevice()&&window.innerWidth>window.innerHeight;}
+document.body.classList.toggle('phone-device',isPhoneDevice());
 function isCompactDisplay(){return window.matchMedia('(max-width:700px), (pointer:coarse)').matches||navigator.connection?.saveData===true;}
 birthdayMusic.loop=true;
 birthdayMusic.preload='none';
@@ -139,6 +147,24 @@ base.loop=true;
 const action=document.getElementById('kittyScene');
 action.loop=false;
 const rewindScene=document.getElementById('rewindScene');
+let rotationBlocked=false;
+function syncPhoneOrientation(){
+ const blocked=needsPortrait();
+ rotateOverlay.classList.toggle('show',blocked);
+ rotateOverlay.setAttribute('aria-hidden',String(!blocked));
+ rotateOverlay.inert=!blocked;
+ page.inert=blocked;
+ closeCard.inert=blocked;
+ if(blocked===rotationBlocked)return;
+ rotationBlocked=blocked;
+ if(blocked){base.pause();action.pause();rewindScene.pause();return;}
+ if(actionActive){action.play().catch(()=>{});}
+ else if(rewindScene.classList.contains('active')){rewindScene.play().catch(()=>{});}
+ else if(!actionStarted){base.play().catch(()=>{});}
+}
+syncPhoneOrientation();
+window.addEventListener('resize',syncPhoneOrientation,{passive:true});
+window.addEventListener('orientationchange',()=>requestAnimationFrame(syncPhoneOrientation),{passive:true});
 const fireCanvas=document.getElementById('fireCanvas');
 const fireCtx=fireCanvas.getContext('2d');
 const particleCanvas=document.getElementById('particles');
@@ -154,8 +180,8 @@ fitCanvases();window.addEventListener('resize',fitCanvases,{passive:true});
 function syncMusicButton(playing){
  musicButton.classList.toggle('music-playing',playing);
  musicButton.setAttribute('aria-pressed',String(playing));
- musicButton.setAttribute('aria-label',playing?'Pausar canción de feliz cumpleaños':'Activar canción de feliz cumpleaños');
- musicButton.querySelector('span').textContent=playing?'Pausar música':'Activar música';
+ musicButton.setAttribute('aria-label',playing?'Pausar música':'Activar música');
+ musicButton.title=playing?'Pausar música':'Activar música';
 }
 function beginMusic(force=false){
  if(musicPausedByChoice&&!force)return;
@@ -286,7 +312,7 @@ function ensureVideoReady(video,timeoutMs=15000){
  });
 }
 function launchCakeSequence(){
- if(actionStarted||actionActive||returningToOpening)return;
+ if(needsPortrait()||actionStarted||actionActive||returningToOpening)return;
  beginMusic();
  startCatAction();
 }
@@ -304,7 +330,7 @@ function resetToOpening(){
  candles.forEach(c=>{c.active=true;c.smokeAt=0;});
  ending.classList.remove('show');
  base.loop=true;base.currentTime=0;
- base.play().catch(()=>{});
+ if(!needsPortrait())base.play().catch(()=>{});
 }
 async function reverseBackToOpening(){
  if(returningToOpening||!actionStarted)return;
@@ -327,13 +353,18 @@ async function reverseBackToOpening(){
 }
 rewindScene.addEventListener('ended',resetToOpening);
 closeCard.addEventListener('click',reverseBackToOpening);
-cakeHotspot.addEventListener('click',launchCakeSequence);
+function requestCakeFullscreen(){
+ if(document.fullscreenElement||!document.documentElement.requestFullscreen)return;
+ try{const request=document.documentElement.requestFullscreen({navigationUI:'hide'});if(request&&typeof request.catch==='function')request.catch(()=>{});}catch(e){}
+}
+cakeHotspot.addEventListener('click',()=>{if(!needsPortrait())requestCakeFullscreen();launchCakeSequence();});
 async function startCatAction(){
  if(actionStarted||actionFinished)return;
  actionStarted=true;actionActive=true;fireCanvas.style.opacity='0';
  cardConfettiActive=false;cardSignature.classList.remove('show');
  try{
   await ensureVideoReady(action);
+  if(needsPortrait()){actionActive=false;actionStarted=false;fireCanvas.style.opacity='1';return;}
   action.pause();
   try{action.currentTime=0;}catch(e){}
   action.playbackRate=1.15;
@@ -366,6 +397,6 @@ function endCatAction(){
 action.addEventListener('ended',endCatAction);
 // El video 2 no se inicia solo: únicamente empieza al tocar la torta.
 document.querySelectorAll('.candle-hotspot').forEach(hit=>{hit.addEventListener('click',launchCakeSequence);hit.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();launchCakeSequence();}});});
-// Retry the landscape if a mobile browser delays autoplay until its first user gesture.
-base.play().catch(()=>{});
+// Start the opening loop only after confirming portrait mode on phones.
+if(!needsPortrait())base.play().catch(()=>{});
 })();
