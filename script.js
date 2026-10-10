@@ -11,7 +11,7 @@ function isPhoneDevice(){
  const ua=navigator.userAgent||'';
  return navigator.userAgentData?.mobile===true||/Mobi|iPhone|iPod|Windows Phone/i.test(ua)||(/Android/i.test(ua)&&/Mobile/i.test(ua))||(window.matchMedia('(pointer:coarse)').matches&&Math.min(window.innerWidth,window.innerHeight)<600);
 }
-function needsPortrait(){return isPhoneDevice()&&window.innerWidth>window.innerHeight;}
+function needsLandscape(){return isPhoneDevice()&&window.innerHeight>window.innerWidth;}
 document.body.classList.toggle('phone-device',isPhoneDevice());
 function isCompactDisplay(){return window.matchMedia('(max-width:700px), (pointer:coarse)').matches||navigator.connection?.saveData===true;}
 birthdayMusic.loop=true;
@@ -149,7 +149,7 @@ action.loop=false;
 const rewindScene=document.getElementById('rewindScene');
 let rotationBlocked=false;
 function syncPhoneOrientation(){
- const blocked=needsPortrait();
+ const blocked=needsLandscape();
  rotateOverlay.classList.toggle('show',blocked);
  rotateOverlay.setAttribute('aria-hidden',String(!blocked));
  rotateOverlay.inert=!blocked;
@@ -311,8 +311,9 @@ function ensureVideoReady(video,timeoutMs=15000){
   if(video.readyState>=1)finish();
  });
 }
-function launchCakeSequence(){
- if(needsPortrait()||actionStarted||actionActive||returningToOpening)return;
+function launchCakeSequence(fromCake=false){
+ if(needsLandscape()||actionStarted||actionActive||returningToOpening)return;
+ if(fromCake)requestCakeFullscreen();
  beginMusic();
  startCatAction();
 }
@@ -330,7 +331,7 @@ function resetToOpening(){
  candles.forEach(c=>{c.active=true;c.smokeAt=0;});
  ending.classList.remove('show');
  base.loop=true;base.currentTime=0;
- if(!needsPortrait())base.play().catch(()=>{});
+ if(!needsLandscape())base.play().catch(()=>{});
 }
 async function reverseBackToOpening(){
  if(returningToOpening||!actionStarted)return;
@@ -353,18 +354,25 @@ async function reverseBackToOpening(){
 }
 rewindScene.addEventListener('ended',resetToOpening);
 closeCard.addEventListener('click',reverseBackToOpening);
+let fullscreenRequestPending=false;
 function requestCakeFullscreen(){
- if(document.fullscreenElement||!document.documentElement.requestFullscreen)return;
- try{const request=document.documentElement.requestFullscreen({navigationUI:'hide'});if(request&&typeof request.catch==='function')request.catch(()=>{});}catch(e){}
+ if(document.fullscreenElement||fullscreenRequestPending||!document.documentElement.requestFullscreen)return;
+ fullscreenRequestPending=true;
+ try{
+  const request=document.documentElement.requestFullscreen({navigationUI:'hide'});
+  if(request&&typeof request.catch==='function')request.catch(()=>{fullscreenRequestPending=false;});
+  else fullscreenRequestPending=false;
+ }catch(e){fullscreenRequestPending=false;}
 }
-cakeHotspot.addEventListener('click',()=>{if(!needsPortrait())requestCakeFullscreen();launchCakeSequence();});
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)fullscreenRequestPending=false;});
+cakeHotspot.addEventListener('click',()=>launchCakeSequence(true));
 async function startCatAction(){
  if(actionStarted||actionFinished)return;
  actionStarted=true;actionActive=true;fireCanvas.style.opacity='0';
  cardConfettiActive=false;cardSignature.classList.remove('show');
  try{
   await ensureVideoReady(action);
-  if(needsPortrait()){actionActive=false;actionStarted=false;fireCanvas.style.opacity='1';return;}
+  if(needsLandscape()){actionActive=false;actionStarted=false;fireCanvas.style.opacity='1';return;}
   action.pause();
   try{action.currentTime=0;}catch(e){}
   action.playbackRate=1.15;
@@ -398,5 +406,5 @@ action.addEventListener('ended',endCatAction);
 // El video 2 no se inicia solo: únicamente empieza al tocar la torta.
 document.querySelectorAll('.candle-hotspot').forEach(hit=>{hit.addEventListener('click',launchCakeSequence);hit.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();launchCakeSequence();}});});
 // Start the opening loop only after confirming portrait mode on phones.
-if(!needsPortrait())base.play().catch(()=>{});
+if(!needsLandscape())base.play().catch(()=>{});
 })();
