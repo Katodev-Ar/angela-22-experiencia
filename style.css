@@ -60,3 +60,29 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 /* Estela mágica sensible al mouse y al dedo, superpuesta sin interceptar clics. */
 .cursor-particles{position:fixed;inset:0;width:100%;height:100%;z-index:8;pointer-events:none;opacity:.96}
 @media(prefers-reduced-motion:reduce){.cursor-particles{opacity:.65}}
+
+/* Pulso de la torta un poco más amplio, centrado sobre el mismo punto. */
+.cake-hotspot{left:18.9%;width:23.4%}
+
+/* Controles compactos y cómodos al tacto, sin tapar el saludo. */
+.music-controls{position:fixed;z-index:35;left:50%;top:calc(env(safe-area-inset-top,0px) + 59px);transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:8px;max-width:94vw}
+.music-button{position:static;left:auto;top:auto;transform:none;white-space:nowrap;min-height:40px}
+.volume-control{height:38px;display:inline-flex;align-items:center;gap:5px;padding:0 10px;border:1px solid #ffe0ff70;border-radius:999px;background:linear-gradient(115deg,#271631e8,#5b2a60e8);box-shadow:0 4px 20px #13091f8c,inset 0 0 12px #ffeaff12;color:#fff0fc;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);touch-action:manipulation}
+.volume-icon{font:700 18px/1 ui-monospace,monospace;color:#ffe0fa}
+.volume-control input{width:88px;height:30px;margin:0;accent-color:#ffb5e7;cursor:pointer;touch-action:pan-x}
+.music-credit{position:fixed;z-index:35;left:50%;top:calc(env(safe-area-inset-top,0px) + 101px);transform:translateX(-50%);max-width:92vw;text-align:center;color:#ffe7f7ad;font-size:9px;line-height:1.2;text-decoration:none;letter-spacing:.02em;text-shadow:0 1px 5px #170d22;white-space:nowrap}
+.music-credit a{color:inherit;text-decoration:none}
+.music-credit a:hover,.music-credit a:focus-visible{color:#fff2fc;text-decoration:underline;outline:none}
+
+/* La X usa bloques cuadrados para seguir el estilo pixel art. */
+.close-card{border:2px solid #ffe4ffb0;border-radius:4px;background:linear-gradient(145deg,#34203ff2,#26142ff2);clip-path:polygon(0 14%,14% 14%,14% 0,86% 0,86% 14%,100% 14%,100% 86%,86% 86%,86% 100%,14% 100%,14% 86%,0 86%)}
+.close-card svg{display:block;width:clamp(18px,2vw,23px);height:auto;overflow:visible;fill:#fff2ff;filter:drop-shadow(0 0 3px #ff9cdd)}
+
+@media(max-width:600px){
+ .music-controls{gap:5px;top:calc(env(safe-area-inset-top,0px) + 57px)}
+ .music-button{padding:7px 10px;font-size:10.5px;min-height:44px}
+ .volume-control{height:40px;gap:3px;padding:0 8px}
+ .volume-control input{width:76px;height:36px}
+ .music-credit{top:calc(env(safe-area-inset-top,0px) + 101px);font-size:8.5px}
+ .close-card{width:44px;height:44px}
+}

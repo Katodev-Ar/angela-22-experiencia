@@ -47,12 +47,27 @@
  </section>
 
  <div class="greeting">FELIZ CUMPLEAÑOS, <span>ANGELA</span> · 22 ✨</div>
-<button class="music-button" id="musicButton" type="button" aria-label="Activar canción de feliz cumpleaños" aria-pressed="false">♫ <span>Activar música</span></button>
+<div class="music-controls" role="group" aria-label="Controles de música">
+ <button class="music-button" id="musicButton" type="button" aria-label="Activar canción de feliz cumpleaños" aria-pressed="false">♫ <span>Activar música</span></button>
+ <label class="volume-control" for="musicVolume" title="Volumen de la música">
+  <span class="volume-icon" aria-hidden="true">◖</span>
+  <input id="musicVolume" type="range" min="0" max="1" step="0.01" value="0.62" aria-label="Volumen de la música" aria-valuetext="62%">
+ </label>
+</div>
+<div class="music-credit">Música: <a href="https://freemusicarchive.org/music/alex-morgan/birthday-celebration-songs/happy-birthday-songs/" target="_blank" rel="noopener noreferrer">“Happy Birthday Songs” — Alex Morgan</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a></div>
 <audio id="birthdayMusic" preload="none" loop src="media/birthday-music.mp3" aria-label="Canción instrumental de feliz cumpleaños"></audio>
  <div class="hint" id="hint">Tocá la torta para comenzar la sorpresa ✨🐾</div>
  <div class="ending" id="ending" role="status" aria-live="polite"><h2>¡Felices 22, Angela! 💖</h2><p>Que se te cumplan todos los deseos y nunca falten los ronroneos de tus gaticos. 🐾✨</p></div>
 </main>
-<button class="close-card" id="closeCard" type="button" aria-label="Volver al video inicial" title="Volver al inicio">×</button>
+<button class="close-card" id="closeCard" type="button" aria-label="Volver al video inicial" title="Volver al inicio">
+ <svg viewBox="0 0 16 14" aria-hidden="true" shape-rendering="crispEdges">
+  <rect x="1" y="0" width="2" height="2"/><rect x="3" y="2" width="2" height="2"/><rect x="5" y="4" width="2" height="2"/>
+  <rect x="7" y="6" width="2" height="2"/>
+  <rect x="9" y="4" width="2" height="2"/><rect x="11" y="2" width="2" height="2"/><rect x="13" y="0" width="2" height="2"/>
+  <rect x="1" y="12" width="2" height="2"/><rect x="3" y="10" width="2" height="2"/><rect x="5" y="8" width="2" height="2"/>
+  <rect x="9" y="8" width="2" height="2"/><rect x="11" y="10" width="2" height="2"/><rect x="13" y="12" width="2" height="2"/>
+ </svg>
+</button>
 <script src="script.js"></script>
 </body>
 </html>

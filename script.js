@@ -4,8 +4,13 @@ const closeCard=document.getElementById('closeCard');
 const cakeHotspot=document.getElementById('cakeHotspot');
 const musicButton=document.getElementById('musicButton');
 const birthdayMusic=document.getElementById('birthdayMusic');
+const musicVolume=document.getElementById('musicVolume');
+function isCompactDisplay(){return window.matchMedia('(max-width:700px), (pointer:coarse)').matches||navigator.connection?.saveData===true;}
 birthdayMusic.loop=true;
 birthdayMusic.preload='none';
+function setMusicVolume(){const value=Number(musicVolume.value);birthdayMusic.volume=value;musicVolume.setAttribute('aria-valuetext',`${Math.round(value*100)}%`);}
+musicVolume.addEventListener('input',setMusicVolume);
+setMusicVolume();
 function positionCloseCard(){const r=stage.getBoundingClientRect();closeCard.style.left=(r.left+r.width*.78)+'px';closeCard.style.top=(r.top+r.height*.115)+'px';}
 window.addEventListener('resize',positionCloseCard,{passive:true});
 if(window.visualViewport)window.visualViewport.addEventListener('resize',positionCloseCard,{passive:true});
@@ -23,11 +28,12 @@ function randomAmbientParticle(initial=false){
   kind:roll<.62?'dust':roll<.82?'spark':roll<.94?'pixel':'flare',depth:.3+Math.random()*.9};
 }
 function resizeAmbient(){
- ambientW=window.innerWidth;ambientH=window.innerHeight;ambientDpr=Math.min(window.devicePixelRatio||1,2);
+ const compact=isCompactDisplay();
+ ambientW=window.innerWidth;ambientH=window.innerHeight;ambientDpr=Math.min(window.devicePixelRatio||1,compact?1.5:2);
  ambientCanvas.width=Math.max(1,Math.round(ambientW*ambientDpr));ambientCanvas.height=Math.max(1,Math.round(ambientH*ambientDpr));
  ambientCanvas.style.width=ambientW+'px';ambientCanvas.style.height=ambientH+'px';
  ambientCtx.setTransform(ambientDpr,0,0,ambientDpr,0,0);
- const count=Math.max(65,Math.min(230,Math.round(ambientW*ambientH/8500)));
+ const count=Math.max(compact?34:65,Math.min(compact?105:230,Math.round(ambientW*ambientH/(compact?14000:8500))));
  ambientParticles=Array.from({length:count},()=>randomAmbientParticle(true));
 }
 function drawAmbientParticle(p,t){
@@ -81,7 +87,7 @@ const cursorCtx=cursorCanvas.getContext('2d');
 let cursorW=0,cursorH=0,cursorDpr=1,cursorTrail=[],cursorLastFrame=performance.now(),cursorLastSpawn=0,cursorLastX=null,cursorLastY=null;
 const trailColors=['#ff9ddd','#ffe4a0','#cfb8ff','#a2ecff','#fff1fa'];
 function resizeCursorCanvas(){
- cursorW=window.innerWidth;cursorH=window.innerHeight;cursorDpr=Math.min(window.devicePixelRatio||1,2);
+ cursorW=window.innerWidth;cursorH=window.innerHeight;cursorDpr=Math.min(window.devicePixelRatio||1,isCompactDisplay()?1.5:2);
  cursorCanvas.width=Math.max(1,Math.round(cursorW*cursorDpr));cursorCanvas.height=Math.max(1,Math.round(cursorH*cursorDpr));
  cursorCanvas.style.width=cursorW+'px';cursorCanvas.style.height=cursorH+'px';cursorCtx.setTransform(cursorDpr,0,0,cursorDpr,0,0);
 }
@@ -104,13 +110,16 @@ function drawCursorShape(p,t){
  }else{cursorCtx.beginPath();cursorCtx.arc(0,0,p.size,0,Math.PI*2);cursorCtx.fill();}
  cursorCtx.restore();
 }
+let cursorAnimationRunning=false;
 function animateCursorTrail(t){
+ cursorAnimationRunning=false;
  const dt=Math.min(.04,Math.max(0,(t-cursorLastFrame)/1000));cursorLastFrame=t;cursorCtx.clearRect(0,0,cursorW,cursorH);
  cursorTrail=cursorTrail.filter(p=>p.life>0);
  for(const p of cursorTrail){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=Math.pow(.965,dt*60);p.vy*=Math.pow(.975,dt*60);drawCursorShape(p,t);}
- requestAnimationFrame(animateCursorTrail);
+ if(cursorTrail.length){cursorAnimationRunning=true;requestAnimationFrame(animateCursorTrail);}
 }
-resizeCursorCanvas();requestAnimationFrame(animateCursorTrail);
+function wakeCursorTrail(){if(!cursorAnimationRunning){cursorAnimationRunning=true;requestAnimationFrame(animateCursorTrail);}}
+resizeCursorCanvas();
 window.addEventListener('resize',resizeCursorCanvas,{passive:true});
 window.addEventListener('orientationchange',()=>requestAnimationFrame(resizeCursorCanvas),{passive:true});
 window.addEventListener('pointermove',e=>{
@@ -121,8 +130,9 @@ window.addEventListener('pointermove',e=>{
  cursorLastSpawn=now;
  const count=e.pointerType==='mouse'?Math.max(1,Math.min(4,Math.ceil(distance/13))):2;
  emitCursorTrail(x,y,count,false);
+ wakeCursorTrail();
  },{passive:true});
-window.addEventListener('pointerdown',e=>{emitCursorTrail(e.clientX,e.clientY,10,true);},{passive:true});
+window.addEventListener('pointerdown',e=>{emitCursorTrail(e.clientX,e.clientY,10,true);wakeCursorTrail();},{passive:true});
 
 const base=document.getElementById('landscape');
 base.loop=true;
@@ -139,7 +149,7 @@ const ending=document.getElementById('ending');
 const candleData=[{x:346,baseY:466},{x:390,baseY:454},{x:425,baseY:443},{x:461,baseY:453},{x:497,baseY:440}];
 const candles=candleData.map((c,i)=>({x:c.x,baseY:c.baseY,active:true,phase:i*1.29,smokeAt:0}));
 let particles=[],birthdayMusicStarted=false,musicPausedByChoice=false,actionStarted=false,actionActive=false,actionFinished=false,catExtinguished=false,interactionCount=0;
-function fitCanvases(){for(const c of [fireCanvas,particleCanvas]){const dpr=Math.min(window.devicePixelRatio||1,2);c.width=Math.max(1,Math.round(stage.clientWidth*dpr));c.height=Math.max(1,Math.round(stage.clientHeight*dpr));c.style.width='100%';c.style.height='100%';}}
+function fitCanvases(){for(const c of [fireCanvas,particleCanvas]){const dpr=Math.min(window.devicePixelRatio||1,isCompactDisplay()?1.5:2);c.width=Math.max(1,Math.round(stage.clientWidth*dpr));c.height=Math.max(1,Math.round(stage.clientHeight*dpr));c.style.width='100%';c.style.height='100%';}}
 fitCanvases();window.addEventListener('resize',fitCanvases,{passive:true});
 function syncMusicButton(playing){
  musicButton.classList.toggle('music-playing',playing);
