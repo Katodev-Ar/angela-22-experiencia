@@ -11,7 +11,11 @@ function isPhoneDevice(){
  const ua=navigator.userAgent||'';
  return navigator.userAgentData?.mobile===true||/Mobi|iPhone|iPod|Windows Phone/i.test(ua)||(/Android/i.test(ua)&&/Mobile/i.test(ua))||(window.matchMedia('(pointer:coarse)').matches&&Math.min(window.innerWidth,window.innerHeight)<600);
 }
-function needsLandscape(){return isPhoneDevice()&&window.innerHeight>window.innerWidth;}
+function isLandscape(){
+ const screenType=window.screen?.orientation?.type||'';
+ return screenType.startsWith('landscape')||window.matchMedia('(orientation: landscape)').matches||window.innerWidth>window.innerHeight||(window.visualViewport&&window.visualViewport.width>window.visualViewport.height);
+}
+function needsLandscape(){return isPhoneDevice()&&!isLandscape();}
 document.body.classList.toggle('phone-device',isPhoneDevice());
 function isCompactDisplay(){return window.matchMedia('(max-width:700px), (pointer:coarse)').matches||navigator.connection?.saveData===true;}
 birthdayMusic.loop=true;
@@ -163,8 +167,15 @@ function syncPhoneOrientation(){
  else if(!actionStarted){base.play().catch(()=>{});}
 }
 syncPhoneOrientation();
-window.addEventListener('resize',syncPhoneOrientation,{passive:true});
-window.addEventListener('orientationchange',()=>requestAnimationFrame(syncPhoneOrientation),{passive:true});
+function schedulePhoneOrientationSync(){
+ syncPhoneOrientation();
+ requestAnimationFrame(()=>requestAnimationFrame(syncPhoneOrientation));
+ setTimeout(syncPhoneOrientation,180);
+}
+window.addEventListener('resize',schedulePhoneOrientationSync,{passive:true});
+window.addEventListener('orientationchange',schedulePhoneOrientationSync,{passive:true});
+window.visualViewport?.addEventListener('resize',schedulePhoneOrientationSync,{passive:true});
+window.screen?.orientation?.addEventListener?.('change',schedulePhoneOrientationSync);
 const fireCanvas=document.getElementById('fireCanvas');
 const fireCtx=fireCanvas.getContext('2d');
 const particleCanvas=document.getElementById('particles');

@@ -157,7 +157,7 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 }
 
 
-/* Ajustes finales: orientación vertical en celulares, controles mínimos y cursor festivo. */
+/* Ajustes finales: orientación horizontal en celulares, controles mínimos y cursor festivo. */
 .rotate-overlay{position:fixed;z-index:1000;inset:0;display:grid;place-items:center;padding:24px;background:#160d22;color:#fff0fc;text-align:center;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .25s steps(4,end),visibility .25s}
 .rotate-overlay.show{visibility:visible;opacity:1;pointer-events:auto}
 .rotate-message{display:grid;justify-items:center;gap:12px;max-width:340px}
@@ -165,8 +165,7 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 .rotate-message p{margin:0;color:#ffe3a0;font:700 clamp(22px,6vw,32px)/1.15 "Pixelify Sans",ui-monospace,monospace;text-shadow:2px 2px #4a244b}
 .rotate-message span{color:#ecd5ec;font:14px/1.5 ui-rounded,"Segoe UI",system-ui,sans-serif}
 @keyframes phoneTurn{0%,18%{transform:rotate(0)}62%,82%,100%{transform:rotate(90deg)}}
-@media (orientation:portrait) and (pointer:coarse) and (max-width:600px){.rotate-overlay{visibility:visible;opacity:1;pointer-events:auto}}
-.party-hat{position:absolute;z-index:5;right:31.5%;top:13%;width:6.5%;max-width:86px;height:auto;overflow:visible;pointer-events:none;filter:drop-shadow(2px 3px 0 #24132f) drop-shadow(0 0 5px #ffb5e7a8);transform-origin:50% 90%;animation:hatCelebrate 1.55s steps(4,end) infinite;transition:opacity .55s ease,transform .55s ease}
+.party-hat{position:absolute;z-index:5;right:27%;top:13.5%;width:6.5%;max-width:86px;height:auto;overflow:visible;pointer-events:none;filter:drop-shadow(2px 3px 0 #24132f) drop-shadow(0 0 5px #ffb5e7a8);transform-origin:50% 90%;animation:hatCelebrate 1.55s steps(4,end) infinite;transition:opacity .55s ease,transform .55s ease}
 .scene.showing-card .party-hat{opacity:0;transform:translateY(-8px) rotate(12deg)}
 @keyframes hatCelebrate{0%,100%{rotate:-3deg;translate:0 0}50%{rotate:3deg;translate:0 -3px}}
 @media(prefers-reduced-motion:reduce){.rotate-phone,.party-hat{animation:none!important}.rotate-overlay,.party-hat{transition-duration:.01ms!important}}
@@ -179,7 +178,7 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 .music-slash{display:block}
 .music-button.music-playing .music-slash{display:none}
 .volume-control{box-sizing:border-box;display:flex;align-items:center;justify-content:flex-start;width:34px!important;height:34px!important;flex:0 0 34px!important;gap:4px;padding:0 7px!important;overflow:hidden;transition:width .16s steps(4,end),flex-basis .16s steps(4,end)}
-.volume-icon{width:18px;height:18px;flex:0 0 18px;fill:#ffe0fa;image-rendering:pixelated}
+.volume-icon{width:18px;height:18px;flex:0 0 18px;color:#ffe0fa;fill:#ffe0fa;image-rendering:auto}
 .volume-control input{box-sizing:border-box;width:0!important;height:12px!important;flex:0 0 0!important;margin:0!important;padding:0;opacity:0;transition:width .16s steps(4,end),flex-basis .16s steps(4,end),opacity .1s;touch-action:pan-x}
 .volume-control:hover,.volume-control:focus-within{width:112px!important;flex-basis:112px!important}
 .volume-control:hover input,.volume-control:focus-within input{width:76px!important;flex:0 0 76px!important;opacity:1}
@@ -187,7 +186,7 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 @media (max-width:900px) and (pointer:coarse){.music-controls,.music-credit{display:none!important}}
 .phone-device .music-controls,.phone-device .music-credit{display:none!important}
 @media (hover:hover) and (pointer:fine){
- body{cursor:url("media/cursor-party.svg") 2 2,auto}
- .cake-hotspot,.candle-hotspot,.close-card,.music-button,.volume-control,.volume-control input,.music-credit a{cursor:url("media/cursor-party.svg") 2 2,pointer}
+ body{cursor:url("media/cursor-party.svg") 1 1,auto}
+ .cake-hotspot,.candle-hotspot,.close-card,.music-button,.volume-control,.volume-control input,.music-credit a{cursor:url("media/cursor-party.svg") 1 1,pointer}
 }
 @media(prefers-reduced-motion:reduce){.music-controls,.volume-control,.volume-control input{transition:none!important}}
