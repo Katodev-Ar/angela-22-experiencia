@@ -86,3 +86,36 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
  .music-credit{bottom:calc(env(safe-area-inset-bottom,0px) + 108px);font-size:8.5px}
  .close-card{width:44px;height:44px}
 }
+
+/* Detalles compactos de interfaz pixel art. */
+.greeting{padding:5px 10px 6px;border:1px solid #f5d6ef;border-radius:0;background:#24172eeb;box-shadow:2px 2px 0 #11091d,inset 2px 2px 0 #ffffff12;backdrop-filter:none;-webkit-backdrop-filter:none;letter-spacing:.035em;font:700 clamp(9px,1vw,12px)/1.2 ui-monospace,"Courier New",monospace;text-shadow:none}
+.greeting-spark{display:inline-block;width:11px;height:11px;vertical-align:-2px;fill:#ffe6a1;image-rendering:pixelated}
+.music-button,.volume-control{border:1px solid #efd0e9;border-radius:0;background:#24172eeb;box-shadow:2px 2px 0 #11091d,inset 2px 2px 0 #ffffff12;color:#fff0fc;backdrop-filter:none;-webkit-backdrop-filter:none;font-family:ui-monospace,"Courier New",monospace;letter-spacing:0}
+.music-button{min-height:34px;padding:5px 8px;gap:5px;font-size:10px;transition:background .12s,border-color .12s,box-shadow .12s}
+.music-icon{width:12px;height:12px;flex:none;fill:currentColor;image-rendering:pixelated}
+.music-button.music-playing{border-color:#ffb4e8;background:#492649;box-shadow:2px 2px 0 #11091d,inset 2px 2px 0 #ffffff18}
+.music-button:hover,.music-button:focus-visible{border-color:#fff0fc;background:#382141;box-shadow:2px 2px 0 #11091d;outline:2px dashed #ffe0ff;outline-offset:2px}
+.volume-control{height:34px;gap:5px;padding:0 7px}
+.volume-icon{width:13px;height:13px;flex:none;fill:#ffe0fa}
+.volume-control input{appearance:none;width:66px;height:10px;margin:0;border:1px solid #c6a7ca;border-radius:0;background:#4b3854;cursor:pointer;touch-action:pan-x}
+.volume-control input::-webkit-slider-thumb{appearance:none;width:9px;height:14px;border:1px solid #fff0fc;border-radius:0;background:#ff9cdd;box-shadow:1px 1px 0 #11091d}
+.volume-control input::-moz-range-thumb{width:8px;height:12px;border:1px solid #fff0fc;border-radius:0;background:#ff9cdd;box-shadow:1px 1px 0 #11091d}
+.volume-control input::-moz-range-track{height:6px;border:0;border-radius:0;background:#4b3854}
+.card-signature{position:absolute;z-index:7;right:2.5%;bottom:3%;display:flex;align-items:center;gap:4px;padding:4px 6px;border:1px solid #f0d4ef;background:#251731ed;box-shadow:2px 2px 0 #120a1c;color:#ffe8f8;font:700 8px/1.15 ui-monospace,"Courier New",monospace;opacity:0;visibility:hidden;transform:translateY(3px);transition:opacity .32s steps(4,end),transform .32s steps(4,end),visibility .32s;pointer-events:none}
+.card-signature.show{opacity:1;visibility:visible;transform:none}
+.signature-cat{display:block;width:23px;height:19px;flex:none;image-rendering:pixelated}
+.signature-copy{display:grid;gap:1px;white-space:nowrap}
+.signature-copy strong{color:#ffaddf;font-size:9px}
+@media(max-width:600px){
+ .greeting{padding:4px 7px 5px;font-size:8px;letter-spacing:.015em}
+ .greeting-spark{width:9px;height:9px}
+ .music-controls{gap:4px}
+ .music-button{min-height:34px;padding:4px 6px;font-size:9px;gap:4px}
+ .music-icon{width:10px;height:10px}
+ .volume-control{height:34px;gap:4px;padding:0 5px}
+ .volume-icon{width:11px;height:11px}
+ .volume-control input{width:57px}
+ .signature-cat{width:19px;height:16px}
+ .card-signature{right:2%;bottom:2%;padding:3px 4px;font-size:7px;gap:3px}
+ .signature-copy strong{font-size:8px}
+}

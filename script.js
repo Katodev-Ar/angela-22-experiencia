@@ -145,10 +145,11 @@ const particleCanvas=document.getElementById('particles');
 const pctx=particleCanvas.getContext('2d');
 const hint=document.getElementById('hint');
 const ending=document.getElementById('ending');
+const cardSignature=document.getElementById('cardSignature');
 
 const candleData=[{x:346,baseY:466},{x:390,baseY:454},{x:425,baseY:443},{x:461,baseY:453},{x:497,baseY:440}];
 const candles=candleData.map((c,i)=>({x:c.x,baseY:c.baseY,active:true,phase:i*1.29,smokeAt:0}));
-let particles=[],birthdayMusicStarted=false,musicPausedByChoice=false,actionStarted=false,actionActive=false,actionFinished=false,catExtinguished=false,interactionCount=0;
+let particles=[],birthdayMusicStarted=false,musicPausedByChoice=false,actionStarted=false,actionActive=false,actionFinished=false,catExtinguished=false,interactionCount=0,cardConfettiActive=false,confettiSpawnAccumulator=0;
 function fitCanvases(){for(const c of [fireCanvas,particleCanvas]){const dpr=Math.min(window.devicePixelRatio||1,isCompactDisplay()?1.5:2);c.width=Math.max(1,Math.round(stage.clientWidth*dpr));c.height=Math.max(1,Math.round(stage.clientHeight*dpr));c.style.width='100%';c.style.height='100%';}}
 fitCanvases();window.addEventListener('resize',fitCanvases,{passive:true});
 function syncMusicButton(playing){
@@ -224,6 +225,15 @@ function spawnBirthdayFinale(){
   }
  }
 }
+function spawnCardConfetti(dt){
+ const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ confettiSpawnAccumulator+=dt*(reducedMotion?5:13);
+ while(confettiSpawnAccumulator>=1){
+  confettiSpawnAccumulator-=1;
+  const size=3+Math.floor(Math.random()*4),life=8+Math.random()*3;
+  particles.push({x:Math.random()*1280,y:-8-Math.random()*32,vx:(Math.random()-.5)*18,vy:42+Math.random()*68,life,max:life,size,kind:'confetti',gravity:3+Math.random()*5,rotation:Math.random()*Math.PI,rotationSpeed:(Math.random()-.5)*2.4,color:Math.floor(Math.random()*4)});
+ }
+}
 function drawPixelHeart(ctx,x,y,size){
  const unit=Math.max(1,Math.round(size/4));
  const rows=[[1,0,1],[1,1,1],[1,1,1],[0,1,0]];
@@ -240,14 +250,16 @@ function renderParticles(t,dt){pctx.setTransform(particleCanvas.width/1280,0,0,p
   for(const p of particles){
    p.life-=step;p.x+=p.vx*step;p.y+=p.vy*step;p.vy+=p.gravity*step;p.vx*=Math.pow(.985,step*60);
    pctx.globalAlpha=Math.max(0,Math.min(1,p.life/p.max));
-   pctx.fillStyle=p.kind==='pink'?['#ff8bd8','#ffd5f0','#ffc55c','#cf9cff'][Math.floor(p.life*13+p.size)%4]:p.kind==='smoke'?['#8c718f','#a88da8','#d4b7cc'][Math.floor(p.life*7+p.size)%3]:['#ffd16d','#fff2b2','#ff91d7','#b99cff'][Math.floor(p.life*12+p.size)%4];
+   pctx.fillStyle=p.kind==='pink'?['#ff8bd8','#ffd5f0','#ffc55c','#cf9cff'][Math.floor(p.life*13+p.size)%4]:p.kind==='smoke'?['#8c718f','#a88da8','#d4b7cc'][Math.floor(p.life*7+p.size)%3]:p.kind==='confetti'?['#ffd16d','#ff91d7','#b99cff','#99eaff'][p.color]:['#ffd16d','#fff2b2','#ff91d7','#b99cff'][Math.floor(p.life*12+p.size)%4];
+   if(p.kind==='confetti')p.rotation+=p.rotationSpeed*step;
    if(p.kind==='heart')drawPixelHeart(pctx,p.x,p.y,p.size);
    else if(p.kind==='sparkle'){pctx.save();pctx.translate(p.x,p.y);pctx.rotate((1-p.life/p.max)*Math.PI);pctx.shadowColor=pctx.fillStyle;pctx.shadowBlur=9;pctx.fillRect(-.7,p.size*-1.3,1.4,p.size*2.6);pctx.fillRect(-p.size*1.3,-.7,p.size*2.6,1.4);pctx.restore();}
+   else if(p.kind==='confetti'){pctx.save();pctx.translate(Math.round(p.x),Math.round(p.y));pctx.rotate(p.rotation);pctx.fillRect(-Math.ceil(p.size/2),-Math.ceil(p.size/2),p.size,Math.max(4,p.size*1.7));pctx.restore();}
    else pctx.fillRect(Math.round(p.x),Math.round(p.y),p.size,p.size);
   }
   pctx.globalAlpha=1;
  }
-let last=performance.now();function animate(t){const dt=(t-last)/1000;last=t;renderFlames(t);renderParticles(t,dt);requestAnimationFrame(animate)}requestAnimationFrame(animate);
+let last=performance.now();function animate(t){const dt=(t-last)/1000;last=t;renderFlames(t);if(cardConfettiActive)spawnCardConfetti(dt);renderParticles(t,dt);requestAnimationFrame(animate)}requestAnimationFrame(animate);
 let returningToOpening=false;
 function ensureVideoReady(video,timeoutMs=15000){
  if(video.readyState>=1)return Promise.resolve();
@@ -291,6 +303,7 @@ function launchCakeSequence(){
 }
 function resetToOpening(){
  returningToOpening=false;
+ cardConfettiActive=false;confettiSpawnAccumulator=0;particles=[];cardSignature.classList.remove('show');
  rewindScene.classList.remove('active');
  action.classList.remove('active');
  stage.classList.remove('showing-card','action-playing');
@@ -309,6 +322,7 @@ function resetToOpening(){
 async function reverseBackToOpening(){
  if(returningToOpening||!actionStarted)return;
  returningToOpening=true;
+ cardConfettiActive=false;cardSignature.classList.remove('show');particles=particles.filter(p=>p.kind!=='confetti');
  closeCard.classList.remove('show');
  actionActive=false;action.pause();
  try{action.currentTime=Math.min(action.duration||29.8,29.8);}catch(e){}
@@ -330,6 +344,7 @@ cakeHotspot.addEventListener('click',launchCakeSequence);
 async function startCatAction(){
  if(actionStarted||actionFinished)return;
  actionStarted=true;actionActive=true;fireCanvas.style.opacity='0';
+ cardConfettiActive=false;cardSignature.classList.remove('show');
  try{
   await ensureVideoReady(action);
   action.pause();
@@ -358,7 +373,7 @@ action.addEventListener('timeupdate',()=>{
 });
 function endCatAction(){
  // Keep the final frame visible and paused; do not reset time or hide the clip.
- actionActive=false;actionFinished=true;action.pause();action.playbackRate=1.15;positionCloseCard();closeCard.classList.add('show');
+ actionActive=false;actionFinished=true;action.pause();action.playbackRate=1.15;positionCloseCard();closeCard.classList.add('show');cardConfettiActive=true;cardSignature.classList.add('show');
  if(!catExtinguished){catExtinguished=true;extinguish(4,'kitty');}
 }
 action.addEventListener('ended',endCatAction);
