@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#20132d">
+<meta name="description" content="Una sorpresa interactiva de cumpleaños para Angela, con gatitos, música y muchos deseos bonitos.">
+<title>Angela cumple 22 ✨</title>
+<link rel="icon" type="image/svg+xml" href="media/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="¡Feliz cumpleaños, Angela!">
+<meta property="og:description" content="Una sorpresa interactiva para celebrar tus 22, con gatitos y mucho cariño.">
+<meta property="og:image" content="media/social-preview.jpg">
+<meta property="og:image:alt" content="Una torta de cumpleaños rodeada de gatitos en un paisaje pixelado.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="¡Feliz cumpleaños, Angela!">
+<meta name="twitter:description" content="Una sorpresa interactiva para celebrar tus 22, con gatitos y mucho cariño.">
+<meta name="twitter:image" content="media/social-preview.jpg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<img class="ambient" alt="" aria-hidden="true" src="media/scene-poster.jpg">
+<div class="shade" aria-hidden="true"></div>
+<canvas class="ambient-particles" id="ambientParticles" aria-hidden="true"></canvas>
+<canvas class="cursor-particles" id="cursorParticles" aria-hidden="true"></canvas>
+<main class="page" id="page">
+ <section class="scene" id="scene" aria-label="Angela celebra sus 22 años con sus gatitos">
+  <video class="scene-video" id="landscape" src="media/landscape.mp4" muted playsinline autoplay loop preload="auto" poster="media/scene-poster.jpg" aria-label="Paisaje de cumpleaños con gatos animados"></video>
+  <video class="scene-video" id="kittyScene" data-src="media/kitty-scene.mp4" muted playsinline preload="none" poster="media/scene-poster.jpg" aria-label="El gatito se acerca a las velitas"></video>
+  <video class="scene-video" id="rewindScene" data-src="media/rewind-scene.mp4" muted playsinline preload="none" aria-label="Reversa del video de la carta desde el segundo 30 al 10"></video>
+  <canvas class="pixel-fire" id="fireCanvas" width="1280" height="720" aria-hidden="true"></canvas>
+  <img class="angela" id="angela" src="media/angela.png" alt="Angela con su gorrito de cumpleaños y sus gatitos pixelados">
+  <canvas class="particles" id="particles" width="1280" height="720" aria-hidden="true"></canvas>
+  <button class="cake-hotspot" id="cakeHotspot" type="button" aria-label="Tocar la torta para comenzar el video sorpresa">
+   <svg viewBox="0 0 350 236" preserveAspectRatio="none" aria-hidden="true">
+    <path class="cake-outline" d="M 38 52 C 95 37 255 37 312 52 C 330 56 342 66 342 82 L 342 160 C 342 176 348 184 350 198 C 275 234 75 234 0 198 C 2 184 8 176 8 160 L 8 82 C 8 66 20 56 38 52 Z"/>
+   </svg>
+  </button>
+  <div class="candle-hotspot" data-n="0" role="button" tabindex="0" aria-label="Apagar la primera velita"></div>
+  <div class="candle-hotspot" data-n="1" role="button" tabindex="0" aria-label="Apagar la segunda velita"></div>
+  <div class="candle-hotspot" data-n="2" role="button" tabindex="0" aria-label="Apagar la tercera velita"></div>
+  <div class="candle-hotspot" data-n="3" role="button" tabindex="0" aria-label="Apagar la cuarta velita"></div>
+  <div class="candle-hotspot" data-n="4" role="button" tabindex="0" aria-label="Apagar la quinta velita"></div>
+ </section>
+
+ <div class="greeting">FELIZ CUMPLEAÑOS, <span>ANGELA</span> · 22 ✨</div>
+<button class="music-button" id="musicButton" type="button" aria-label="Activar canción de feliz cumpleaños" aria-pressed="false">♫ <span>Activar música</span></button>
+<audio id="birthdayMusic" preload="none" loop src="media/birthday-music.mp3" aria-label="Canción instrumental de feliz cumpleaños"></audio>
+ <div class="hint" id="hint">Tocá la torta para comenzar la sorpresa ✨🐾</div>
+ <div class="ending" id="ending" role="status" aria-live="polite"><h2>¡Felices 22, Angela! 💖</h2><p>Que se te cumplan todos los deseos y nunca falten los ronroneos de tus gaticos. 🐾✨</p></div>
+</main>
+<button class="close-card" id="closeCard" type="button" aria-label="Volver al video inicial" title="Volver al inicio">×</button>
+<script src="script.js"></script>
+</body>
+</html>
