@@ -62,15 +62,15 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 @media(prefers-reduced-motion:reduce){.cursor-particles{opacity:.65}}
 
 /* Pulso de la torta un poco más amplio, centrado sobre el mismo punto. */
-.cake-hotspot{left:18.9%;width:23.4%}
+.cake-hotspot{left:20%;width:22.5%}
 
 /* Controles compactos y cómodos al tacto, sin tapar el saludo. */
-.music-controls{position:fixed;z-index:35;left:50%;top:calc(env(safe-area-inset-top,0px) + 59px);transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:8px;max-width:94vw}
+.music-controls{position:fixed;z-index:35;left:max(12px,env(safe-area-inset-left,0px));right:auto;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 60px);transform:none;display:flex;align-items:center;justify-content:center;gap:8px;max-width:94vw}
 .music-button{position:static;left:auto;top:auto;transform:none;white-space:nowrap;min-height:40px}
 .volume-control{height:38px;display:inline-flex;align-items:center;gap:5px;padding:0 10px;border:1px solid #ffe0ff70;border-radius:999px;background:linear-gradient(115deg,#271631e8,#5b2a60e8);box-shadow:0 4px 20px #13091f8c,inset 0 0 12px #ffeaff12;color:#fff0fc;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);touch-action:manipulation}
 .volume-icon{font:700 18px/1 ui-monospace,monospace;color:#ffe0fa}
 .volume-control input{width:88px;height:30px;margin:0;accent-color:#ffb5e7;cursor:pointer;touch-action:pan-x}
-.music-credit{position:fixed;z-index:35;left:50%;top:calc(env(safe-area-inset-top,0px) + 101px);transform:translateX(-50%);max-width:92vw;text-align:center;color:#ffe7f7ad;font-size:9px;line-height:1.2;text-decoration:none;letter-spacing:.02em;text-shadow:0 1px 5px #170d22;white-space:nowrap}
+.music-credit{position:fixed;z-index:35;left:max(12px,env(safe-area-inset-left,0px));right:auto;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 108px);transform:none;max-width:92vw;text-align:left;color:#ffe7f7ad;font-size:9px;line-height:1.2;text-decoration:none;letter-spacing:.02em;text-shadow:0 1px 5px #170d22;white-space:nowrap}
 .music-credit a{color:inherit;text-decoration:none}
 .music-credit a:hover,.music-credit a:focus-visible{color:#fff2fc;text-decoration:underline;outline:none}
 
@@ -79,10 +79,10 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 .close-card svg{display:block;width:clamp(18px,2vw,23px);height:auto;overflow:visible;fill:#fff2ff;filter:drop-shadow(0 0 3px #ff9cdd)}
 
 @media(max-width:600px){
- .music-controls{gap:5px;top:calc(env(safe-area-inset-top,0px) + 57px)}
+ .music-controls{gap:5px;left:max(12px,env(safe-area-inset-left,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 62px)}
  .music-button{padding:7px 10px;font-size:10.5px;min-height:44px}
  .volume-control{height:40px;gap:3px;padding:0 8px}
  .volume-control input{width:76px;height:36px}
- .music-credit{top:calc(env(safe-area-inset-top,0px) + 101px);font-size:8.5px}
+ .music-credit{bottom:calc(env(safe-area-inset-bottom,0px) + 108px);font-size:8.5px}
  .close-card{width:44px;height:44px}
 }
