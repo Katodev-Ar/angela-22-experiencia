@@ -119,3 +119,28 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
  .card-signature{right:2%;bottom:2%;padding:3px 4px;font-size:7px;gap:3px}
  .signature-copy strong{font-size:8px}
 }
+
+@font-face{font-family:"Pixelify Sans";src:url("media/fonts/PixelifySans-Bold.ttf") format("truetype");font-style:normal;font-weight:700;font-display:swap}
+/* Tamaños fijos en CSS px: el viewport y los breakpoints ya no encogen la botonera. */
+.music-controls{position:fixed;z-index:35;left:calc(env(safe-area-inset-left,0px) + 12px);right:auto;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 58px);transform:none;display:flex;align-items:center;justify-content:flex-start;gap:6px;width:max-content;max-width:none;flex-wrap:nowrap}
+.music-button{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:112px;height:36px;min-height:36px;flex:0 0 112px;padding:0 6px;gap:5px;font-family:"Pixelify Sans",ui-monospace,sans-serif;font-size:11px;line-height:1;white-space:nowrap}
+.music-button span{font:inherit;white-space:nowrap}
+.music-icon{width:12px;height:12px}
+.volume-control{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:98px;height:36px;flex:0 0 98px;gap:4px;padding:0 5px}
+.volume-icon{width:12px;height:12px}
+.volume-control input{box-sizing:border-box;width:64px;height:14px;flex:0 0 64px}
+.greeting{top:12px;max-width:none;width:max-content;padding:6px 11px 7px;border:2px solid #ffe0f4;border-radius:0;background:#24172ef2;box-shadow:3px 3px 0 #11091d,inset 2px 2px 0 #ffffff12;letter-spacing:.025em;font:700 14px/1.15 "Pixelify Sans",ui-monospace,sans-serif;text-shadow:1px 1px 0 #4a244b}
+.greeting span{color:#ffb2e2}
+.greeting-spark{width:12px;height:12px;vertical-align:-2px}
+.signature-cat{width:31px;height:24px;transform-box:fill-box;transform-origin:center bottom;animation:catWalk .64s steps(2,end) infinite}
+.cat-walk-body{transform-box:fill-box;transform-origin:center bottom;animation:catBodyBob .32s steps(2,end) infinite}
+.cat-tail{transform-box:fill-box;transform-origin:20% 85%;animation:catTailSway .48s steps(2,end) infinite}
+.cat-leg-a,.cat-leg-b{transform-box:fill-box;transform-origin:center top}
+.cat-leg-a{animation:catLegA .32s steps(2,end) infinite}
+.cat-leg-b{animation:catLegB .32s steps(2,end) infinite}
+@keyframes catWalk{0%,100%{transform:translateX(-2px)}50%{transform:translateX(3px)}}
+@keyframes catBodyBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1px)}}
+@keyframes catTailSway{0%,100%{transform:rotate(0)}50%{transform:rotate(-14deg)}}
+@keyframes catLegA{0%,100%{transform:translate(0,0)}50%{transform:translate(1px,-2px)}}
+@keyframes catLegB{0%,100%{transform:translate(0,-2px)}50%{transform:translate(-1px,0)}}
+@media(prefers-reduced-motion:reduce){.signature-cat,.cat-walk-body,.cat-tail,.cat-leg-a,.cat-leg-b{animation:none!important}}

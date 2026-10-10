@@ -227,11 +227,13 @@ function spawnBirthdayFinale(){
 }
 function spawnCardConfetti(dt){
  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- confettiSpawnAccumulator+=dt*(reducedMotion?5:13);
+ confettiSpawnAccumulator+=dt*(reducedMotion?5:18);
  while(confettiSpawnAccumulator>=1){
   confettiSpawnAccumulator-=1;
-  const size=3+Math.floor(Math.random()*4),life=8+Math.random()*3;
-  particles.push({x:Math.random()*1280,y:-8-Math.random()*32,vx:(Math.random()-.5)*18,vy:42+Math.random()*68,life,max:life,size,kind:'confetti',gravity:3+Math.random()*5,rotation:Math.random()*Math.PI,rotationSpeed:(Math.random()-.5)*2.4,color:Math.floor(Math.random()*4)});
+  const side=Math.random()<.78,left=Math.random()<.5;
+  const x=side?(left?Math.random()*250:1030+Math.random()*250):250+Math.random()*780;
+  const size=side?6+Math.floor(Math.random()*5):4+Math.floor(Math.random()*4),life=8+Math.random()*3;
+  particles.push({x,y:-8-Math.random()*32,vx:(Math.random()-.5)*22,vy:48+Math.random()*74,life,max:life,size,kind:'confetti',gravity:4+Math.random()*6,rotation:Math.random()*Math.PI,rotationSpeed:(Math.random()-.5)*2.4,color:Math.floor(Math.random()*4)});
  }
 }
 function drawPixelHeart(ctx,x,y,size){
