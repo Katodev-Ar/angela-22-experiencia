@@ -166,24 +166,24 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 .rotate-message span{color:#ecd5ec;font:14px/1.5 ui-rounded,"Segoe UI",system-ui,sans-serif}
 @keyframes phoneTurn{0%,18%{transform:rotate(90deg)}62%,82%,100%{transform:rotate(0)}}
 @media (orientation:landscape) and (pointer:coarse) and (max-height:600px){.rotate-overlay{visibility:visible;opacity:1;pointer-events:auto}}
-.party-hat{position:absolute;z-index:5;right:22.5%;top:13%;width:8.5%;max-width:112px;height:auto;overflow:visible;pointer-events:none;filter:drop-shadow(2px 3px 0 #24132f) drop-shadow(0 0 5px #ffb5e7a8);transform-origin:50% 90%;animation:hatCelebrate 1.55s steps(4,end) infinite;transition:opacity .55s ease,transform .55s ease}
+.party-hat{position:absolute;z-index:5;right:31.5%;top:13%;width:6.5%;max-width:86px;height:auto;overflow:visible;pointer-events:none;filter:drop-shadow(2px 3px 0 #24132f) drop-shadow(0 0 5px #ffb5e7a8);transform-origin:50% 90%;animation:hatCelebrate 1.55s steps(4,end) infinite;transition:opacity .55s ease,transform .55s ease}
 .scene.showing-card .party-hat{opacity:0;transform:translateY(-8px) rotate(12deg)}
 @keyframes hatCelebrate{0%,100%{rotate:-3deg;translate:0 0}50%{rotate:3deg;translate:0 -3px}}
 @media(prefers-reduced-motion:reduce){.rotate-phone,.party-hat{animation:none!important}.rotate-overlay,.party-hat{transition-duration:.01ms!important}}
 
 /* Icono de música y volumen desplegable: coordenadas y tamaños en píxeles CSS. */
 .music-controls{position:fixed!important;z-index:35;left:calc(env(safe-area-inset-left,0px) + 8px)!important;right:auto!important;top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 8px)!important;transform:none!important;display:flex;align-items:center;justify-content:flex-start;gap:4px;width:max-content;height:30px;max-width:none;padding:0;margin:0;flex-wrap:nowrap}
-.music-button{box-sizing:border-box!important;display:grid!important;place-items:center!important;width:30px!important;height:30px!important;min-height:30px!important;flex:0 0 30px!important;padding:0!important;gap:0!important;font-size:0!important}
+.music-button{box-sizing:border-box!important;display:grid!important;place-items:center!important;width:34px!important;height:34px!important;min-height:34px!important;flex:0 0 34px!important;padding:0!important;gap:0!important;font-size:0!important}
 .music-button span{display:none!important}
-.music-icon{display:block;width:15px;height:15px;fill:currentColor;image-rendering:pixelated}
+.music-icon{display:block;width:20px;height:20px;fill:currentColor;image-rendering:pixelated}
 .music-slash{display:block}
 .music-button.music-playing .music-slash{display:none}
-.volume-control{box-sizing:border-box;display:flex;align-items:center;justify-content:flex-start;width:30px!important;height:30px!important;flex:0 0 30px!important;gap:4px;padding:0 6px!important;overflow:hidden;transition:width .16s steps(4,end),flex-basis .16s steps(4,end)}
-.volume-icon{width:14px;height:14px;flex:0 0 14px;fill:#ffe0fa;image-rendering:pixelated}
+.volume-control{box-sizing:border-box;display:flex;align-items:center;justify-content:flex-start;width:34px!important;height:34px!important;flex:0 0 34px!important;gap:4px;padding:0 7px!important;overflow:hidden;transition:width .16s steps(4,end),flex-basis .16s steps(4,end)}
+.volume-icon{width:18px;height:18px;flex:0 0 18px;fill:#ffe0fa;image-rendering:pixelated}
 .volume-control input{box-sizing:border-box;width:0!important;height:12px!important;flex:0 0 0!important;margin:0!important;padding:0;opacity:0;transition:width .16s steps(4,end),flex-basis .16s steps(4,end),opacity .1s;touch-action:pan-x}
-.volume-control:hover,.volume-control:focus-within{width:104px!important;flex-basis:104px!important}
-.volume-control:hover input,.volume-control:focus-within input{width:68px!important;flex:0 0 68px!important;opacity:1}
-.music-credit{position:fixed;z-index:35;left:calc(env(safe-area-inset-left,0px) + 8px)!important;right:auto!important;top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 43px)!important;max-width:none;font-size:6px!important;line-height:1.15;white-space:nowrap;text-align:left}
+.volume-control:hover,.volume-control:focus-within{width:112px!important;flex-basis:112px!important}
+.volume-control:hover input,.volume-control:focus-within input{width:76px!important;flex:0 0 76px!important;opacity:1}
+.music-credit{position:fixed;z-index:35;left:calc(env(safe-area-inset-left,0px) + 8px)!important;right:auto!important;top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 49px)!important;max-width:none;font-size:6px!important;line-height:1.15;white-space:nowrap;text-align:left}
 @media (max-width:900px) and (pointer:coarse){.music-controls,.music-credit{display:none!important}}
 .phone-device .music-controls,.phone-device .music-credit{display:none!important}
 @media (hover:hover) and (pointer:fine){
