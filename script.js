@@ -220,7 +220,7 @@ function drawPixelHeart(ctx,x,y,size){
  for(let ry=0;ry<rows.length;ry++)for(let rx=0;rx<rows[ry].length;rx++)if(rows[ry][rx])ctx.fillRect(Math.round(x+(rx-1.5)*unit),Math.round(y+(ry-1.5)*unit),unit,unit);
 }
 function extinguish(index,by='angela'){const c=candles[index];if(!c||!c.active)return false;c.active=false;c.smokeAt=performance.now();spawnBurst(c.x,c.baseY-25,by==='kitty'?34:25,by==='kitty'?'pink':'gold');
- if(by==='kitty')hint.textContent='🐾 ¡El gatito amarillo apagó una velita con su patita!';else hint.textContent='✨ ¡Bien, Angela! Una velita menos. Pedí un deseo. ✨';hint.classList.remove('fade');setTimeout(()=>hint.classList.add('fade'),3000);
+ if(by==='kitty'){hint.textContent='';hint.classList.add('fade');}else{hint.textContent='✨ ¡Bien, Angela! Una velita menos. Pedí un deseo. ✨';hint.classList.remove('fade');setTimeout(()=>hint.classList.add('fade'),3000);}
  if(candles.every(n=>!n.active)){spawnBirthdayFinale();setTimeout(spawnBirthdayFinale,420);setTimeout(()=>ending.classList.add('show'),650);hint.classList.remove('fade');hint.textContent='💖 ¡Ya están apagadas todas las velitas! ¡Feliz cumpleaños número 22, Angela!';}
  return true;}
 function renderFlames(t){fireCtx.setTransform(fireCanvas.width/1280,0,0,fireCanvas.height/720,0,0);fireCtx.clearRect(0,0,1280,720);fireCtx.imageSmoothingEnabled=false;

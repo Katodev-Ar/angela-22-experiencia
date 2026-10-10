@@ -42,7 +42,7 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 @media(prefers-reduced-motion:reduce){.voxel{animation-duration:.01ms!important}.scene-video,.pixel-fire,.ending{transition-duration:.01ms!important}}
 
 /* Ajustes responsivos v3: contorno ceñido a la torta y control musical accesible. */
-.cake-hotspot{position:absolute;z-index:9;left:20.2%;top:63.8%;width:20.8%;height:28.5%;padding:0;margin:0;border:0;border-radius:0;background:transparent;cursor:pointer;outline:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.cake-hotspot{position:absolute;z-index:9;left:19.6%;top:63.8%;width:22%;height:28.5%;padding:0;margin:0;border:0;border-radius:0;background:transparent;cursor:pointer;outline:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .cake-hotspot svg{display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
 .cake-outline{fill:none;stroke:#ff9cdd;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 2px #ff4ccf) drop-shadow(0 0 6px #ff4ccf) drop-shadow(0 0 10px #ffc6f2);opacity:.88;animation:cakeGlowPulse 2.05s ease-in-out infinite}
 @keyframes cakeGlowPulse{0%,100%{opacity:.72}50%{opacity:1}}
