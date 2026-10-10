@@ -22,12 +22,10 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 
 .greeting{position:fixed;z-index:10;left:50%;top:max(14px,env(safe-area-inset-top));transform:translateX(-50%);max-width:94vw;text-align:center;white-space:nowrap;padding:9px 18px 10px;border:1px solid #ffe5ff66;border-radius:999px;background:linear-gradient(110deg,#241532ce,#4c2359c7);box-shadow:0 4px 28px #130a24a6,inset 0 0 18px #fff1;backdrop-filter:blur(9px);letter-spacing:.095em;font-weight:850;font-size:clamp(11px,1.25vw,17px);color:#fff2c6;text-shadow:0 0 15px #ff93d5a6;pointer-events:none}
 .greeting span{color:#ffb1e7}
-.hint{position:fixed;z-index:10;bottom:max(14px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:max-content;max-width:92vw;text-align:center;padding:9px 15px;border:1px solid #ffe5ff4b;border-radius:999px;background:#21152dca;box-shadow:0 5px 26px #12091f77;backdrop-filter:blur(8px);font-size:clamp(10px,1.1vw,14px);color:#fff3fc;transition:opacity .9s ease;pointer-events:none}
-.hint.fade{opacity:0}
 .ending{position:fixed;z-index:12;left:50%;top:50%;transform:translate(-50%,-45%) scale(.94);opacity:0;pointer-events:none;text-align:center;width:min(90vw,620px);padding:24px 26px;border:1px solid #ffe4ff8b;border-radius:26px;background:linear-gradient(135deg,#241630eb,#5c2d68e8);box-shadow:0 14px 65px #10081eaa,inset 0 0 30px #ffb7e522;backdrop-filter:blur(14px);transition:opacity .8s,transform .8s}
 .ending.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .ending h2{margin:0 0 9px;font-family:Georgia,serif;font-size:clamp(26px,5vw,48px);color:#ffe6a1;text-shadow:0 0 24px #ff89d4ad}.ending p{margin:0;color:#fff0fb;line-height:1.5;font-size:clamp(14px,2.1vw,19px)}
-@media(max-aspect-ratio:4/5){.scene{border-radius:0;border-left:0;border-right:0}.greeting{top:max(8px,env(safe-area-inset-top));padding:7px 13px;letter-spacing:.045em}.hint{bottom:max(8px,env(safe-area-inset-bottom));padding:8px 11px;white-space:normal}.angela{height:96%;right:2%;max-width:58%}}
+@media(max-aspect-ratio:4/5){.scene{border-radius:0;border-left:0;border-right:0}.greeting{top:max(8px,env(safe-area-inset-top));padding:7px 13px;letter-spacing:.045em}.angela{height:96%;right:2%;max-width:58%}}
 
 /* Partículas luminosas ambientales: se adaptan al ancho, alto y orientación. */
 .ambient-particles{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:1}
@@ -144,3 +142,16 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 @keyframes catLegA{0%,100%{transform:translate(0,0)}50%{transform:translate(1px,-2px)}}
 @keyframes catLegB{0%,100%{transform:translate(0,-2px)}50%{transform:translate(-1px,0)}}
 @media(prefers-reduced-motion:reduce){.signature-cat,.cat-walk-body,.cat-tail,.cat-leg-a,.cat-leg-b{animation:none!important}}
+
+/* En móvil, botonera discreta junto al borde inferior y fuera del área de gesto. */
+@media(max-width:600px){
+ .music-controls{left:calc(env(safe-area-inset-left,0px) + 8px);bottom:calc(env(safe-area-inset-bottom,0px) + 8px);gap:4px}
+ .music-button{width:88px;height:30px;min-height:30px;flex-basis:88px;padding:0 3px;gap:3px;font-size:8px}
+ .music-icon{width:9px;height:9px}
+ .volume-control{width:76px;height:30px;flex-basis:76px;gap:3px;padding:0 3px}
+ .volume-icon{width:10px;height:10px}
+ .volume-control input{width:48px;height:12px;flex-basis:48px}
+ .volume-control input::-webkit-slider-thumb{width:8px;height:12px}
+ .volume-control input::-moz-range-thumb{width:7px;height:10px}
+ .music-credit{left:calc(env(safe-area-inset-left,0px) + 8px);bottom:calc(env(safe-area-inset-bottom,0px) + 43px);font-size:7px}
+}

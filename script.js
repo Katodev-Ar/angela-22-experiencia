@@ -143,7 +143,6 @@ const fireCanvas=document.getElementById('fireCanvas');
 const fireCtx=fireCanvas.getContext('2d');
 const particleCanvas=document.getElementById('particles');
 const pctx=particleCanvas.getContext('2d');
-const hint=document.getElementById('hint');
 const ending=document.getElementById('ending');
 const cardSignature=document.getElementById('cardSignature');
 
@@ -242,8 +241,7 @@ function drawPixelHeart(ctx,x,y,size){
  for(let ry=0;ry<rows.length;ry++)for(let rx=0;rx<rows[ry].length;rx++)if(rows[ry][rx])ctx.fillRect(Math.round(x+(rx-1.5)*unit),Math.round(y+(ry-1.5)*unit),unit,unit);
 }
 function extinguish(index,by='angela'){const c=candles[index];if(!c||!c.active)return false;c.active=false;c.smokeAt=performance.now();spawnBurst(c.x,c.baseY-25,by==='kitty'?34:25,by==='kitty'?'pink':'gold');
- if(by==='kitty'){hint.textContent='';hint.classList.add('fade');}else{hint.textContent='✨ ¡Bien, Angela! Una velita menos. Pedí un deseo. ✨';hint.classList.remove('fade');setTimeout(()=>hint.classList.add('fade'),3000);}
- if(candles.every(n=>!n.active)){spawnBirthdayFinale();setTimeout(spawnBirthdayFinale,420);setTimeout(()=>ending.classList.add('show'),650);hint.classList.remove('fade');hint.textContent='💖 ¡Ya están apagadas todas las velitas! ¡Feliz cumpleaños número 22, Angela!';}
+ if(candles.every(n=>!n.active)){spawnBirthdayFinale();setTimeout(spawnBirthdayFinale,420);setTimeout(()=>ending.classList.add('show'),650);}
  return true;}
 function renderFlames(t){fireCtx.setTransform(fireCanvas.width/1280,0,0,fireCanvas.height/720,0,0);fireCtx.clearRect(0,0,1280,720);fireCtx.imageSmoothingEnabled=false;
  if(!actionActive){candles.forEach(c=>c.active?drawPixelFlame(c,t):drawSmoke(c,t));}}
@@ -287,20 +285,9 @@ function ensureVideoReady(video,timeoutMs=15000){
   if(video.readyState>=1)finish();
  });
 }
-async function requestFullscreenFromTap(){
- try{
-  if(document.fullscreenElement)return;
-  const root=document.documentElement;
-  if(root.requestFullscreen)await root.requestFullscreen({navigationUI:'hide'});
-  else if(root.webkitRequestFullscreen)root.webkitRequestFullscreen();
-  positionCloseCard();
- }catch(e){/* Algunos navegadores no permiten fullscreen desde archivos locales. */}
-}
 function launchCakeSequence(){
  if(actionStarted||actionActive||returningToOpening)return;
  beginMusic();
- requestFullscreenFromTap();
- hint.classList.add('fade');
  startCatAction();
 }
 function resetToOpening(){
@@ -316,8 +303,6 @@ function resetToOpening(){
  actionStarted=false;actionActive=false;actionFinished=false;catExtinguished=false;
  candles.forEach(c=>{c.active=true;c.smokeAt=0;});
  ending.classList.remove('show');
- hint.textContent='Tocá la torta para comenzar la sorpresa ✨🐾';
- hint.classList.remove('fade');
  base.loop=true;base.currentTime=0;
  base.play().catch(()=>{});
 }
