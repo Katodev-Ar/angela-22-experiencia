@@ -20,7 +20,8 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 .candle-hotspot:focus-visible{outline:2px dashed #fff8;outline-offset:2px}
 .candle-hotspot[data-n="0"]{left:25.4%}.candle-hotspot[data-n="1"]{left:28.9%}.candle-hotspot[data-n="2"]{left:31.6%}.candle-hotspot[data-n="3"]{left:34.4%}.candle-hotspot[data-n="4"]{left:37.2%}
 
-.greeting{position:fixed;z-index:10;left:50%;top:max(14px,env(safe-area-inset-top));transform:translateX(-50%);max-width:94vw;text-align:center;white-space:nowrap;padding:9px 18px 10px;border:1px solid #ffe5ff66;border-radius:999px;background:linear-gradient(110deg,#241532ce,#4c2359c7);box-shadow:0 4px 28px #130a24a6,inset 0 0 18px #fff1;backdrop-filter:blur(9px);letter-spacing:.095em;font-weight:850;font-size:clamp(11px,1.25vw,17px);color:#fff2c6;text-shadow:0 0 15px #ff93d5a6;pointer-events:none}
+.greeting{position:fixed;z-index:10;left:50%;top:max(14px,env(safe-area-inset-top));transform:translateX(-50%);max-width:94vw;text-align:center;white-space:nowrap;padding:9px 18px 10px;border:1px solid #ffe5ff66;border-radius:999px;background:linear-gradient(110deg,#241532ce,#4c2359c7);box-shadow:0 4px 28px #130a24a6,inset 0 0 18px #fff1;backdrop-filter:blur(9px);letter-spacing:.095em;font-weight:850;font-size:clamp(11px,1.25vw,17px);color:#fff2c6;text-shadow:0 0 15px #ff93d5a6;pointer-events:none;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}
+.scene.showing-card~.greeting{opacity:0;visibility:hidden}
 .greeting span{color:#ffb1e7}
 .ending{position:fixed;z-index:12;left:50%;top:50%;transform:translate(-50%,-45%) scale(.94);opacity:0;pointer-events:none;text-align:center;width:min(90vw,620px);padding:24px 26px;border:1px solid #ffe4ff8b;border-radius:26px;background:linear-gradient(135deg,#241630eb,#5c2d68e8);box-shadow:0 14px 65px #10081eaa,inset 0 0 30px #ffb7e522;backdrop-filter:blur(14px);transition:opacity .8s,transform .8s}
 .ending.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
@@ -165,23 +166,24 @@ body{position:relative;isolation:isolate;-webkit-tap-highlight-color:transparent
 .rotate-message p{margin:0;color:#ffe3a0;font:700 clamp(22px,6vw,32px)/1.15 "Pixelify Sans",ui-monospace,monospace;text-shadow:2px 2px #4a244b}
 .rotate-message span{color:#ecd5ec;font:14px/1.5 ui-rounded,"Segoe UI",system-ui,sans-serif}
 @keyframes phoneTurn{0%,18%{transform:rotate(0)}62%,82%,100%{transform:rotate(90deg)}}
-.party-hat{position:absolute;z-index:5;right:27%;top:13.5%;width:6.5%;max-width:86px;height:auto;overflow:visible;pointer-events:none;filter:drop-shadow(2px 3px 0 #24132f) drop-shadow(0 0 5px #ffb5e7a8);transform-origin:50% 90%;animation:hatCelebrate 1.55s steps(4,end) infinite;transition:opacity .55s ease,transform .55s ease}
+.party-hat{position:absolute;z-index:5;right:27%;margin-right:-5px;top:13.5%;width:7.8%;max-width:103px;height:auto;overflow:visible;pointer-events:none;filter:drop-shadow(2px 3px 0 #24132f) drop-shadow(0 0 5px #ffb5e7a8);transform-origin:50% 90%;animation:hatCelebrate 1.55s steps(4,end) infinite;transition:opacity .55s ease,transform .55s ease}
 .scene.showing-card .party-hat{opacity:0;transform:translateY(-8px) rotate(12deg)}
 @keyframes hatCelebrate{0%,100%{rotate:-3deg;translate:0 0}50%{rotate:3deg;translate:0 -3px}}
 @media(prefers-reduced-motion:reduce){.rotate-phone,.party-hat{animation:none!important}.rotate-overlay,.party-hat{transition-duration:.01ms!important}}
 
-/* Icono de música y volumen desplegable: coordenadas y tamaños en píxeles CSS. */
-.music-controls{position:fixed!important;z-index:35;left:calc(env(safe-area-inset-left,0px) + 8px)!important;right:auto!important;top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 8px)!important;transform:none!important;display:flex;align-items:center;justify-content:flex-start;gap:4px;width:max-content;height:30px;max-width:none;padding:0;margin:0;flex-wrap:nowrap}
-.music-button{box-sizing:border-box!important;display:grid!important;place-items:center!important;width:34px!important;height:34px!important;min-height:34px!important;flex:0 0 34px!important;padding:0!important;gap:0!important;font-size:0!important}
+/* Botón de música único con el volumen integrado, que se despliega al pasar el mouse. */
+.music-controls{position:fixed!important;z-index:35;left:calc(env(safe-area-inset-left,0px) + 8px)!important;right:auto!important;top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 8px)!important;transform:none!important;box-sizing:border-box;display:flex;align-items:center;justify-content:flex-start;gap:0;width:38px;height:38px;max-width:none;padding:1px;margin:0;flex-wrap:nowrap;overflow:hidden;border:1px solid #efd0e9;background:#24172eeb;box-shadow:2px 2px 0 #11091d,inset 2px 2px 0 #ffffff12;transition:width .18s steps(4,end),border-color .18s}
+.music-controls:hover,.music-controls:focus-within{width:122px;border-color:#ffe0fa}
+.music-button{box-sizing:border-box!important;display:grid!important;place-items:center!important;width:34px!important;height:34px!important;min-height:34px!important;flex:0 0 34px!important;padding:0!important;gap:0!important;font-size:0!important;border:0!important;background:transparent!important;box-shadow:none!important;color:#fff0fc}
+.music-button.music-playing,.music-button:hover,.music-button:focus-visible{border:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;color:#ffb2e2}
 .music-button span{display:none!important}
 .music-icon{display:block;width:20px;height:20px;fill:currentColor;image-rendering:pixelated}
 .music-slash{display:block}
 .music-button.music-playing .music-slash{display:none}
-.volume-control{box-sizing:border-box;display:flex;align-items:center;justify-content:flex-start;width:34px!important;height:34px!important;flex:0 0 34px!important;gap:4px;padding:0 7px!important;overflow:hidden;transition:width .16s steps(4,end),flex-basis .16s steps(4,end)}
-.volume-icon{width:18px;height:18px;flex:0 0 18px;color:#ffe0fa;fill:#ffe0fa;image-rendering:auto}
-.volume-control input{box-sizing:border-box;width:0!important;height:12px!important;flex:0 0 0!important;margin:0!important;padding:0;opacity:0;transition:width .16s steps(4,end),flex-basis .16s steps(4,end),opacity .1s;touch-action:pan-x}
-.volume-control:hover,.volume-control:focus-within{width:112px!important;flex-basis:112px!important}
-.volume-control:hover input,.volume-control:focus-within input{width:76px!important;flex:0 0 76px!important;opacity:1}
+.volume-control{box-sizing:border-box;display:flex;align-items:center;justify-content:center;width:0!important;height:34px!important;flex:0 0 0!important;gap:0;padding:0!important;overflow:hidden;border:0!important;background:transparent!important;box-shadow:none!important;transition:width .18s steps(4,end),flex-basis .18s steps(4,end)}
+.music-controls:hover .volume-control,.music-controls:focus-within .volume-control{width:82px!important;flex-basis:82px!important}
+.volume-control input{box-sizing:border-box;width:0!important;height:12px!important;flex:0 0 0!important;margin:0!important;padding:0;opacity:0;transition:width .18s steps(4,end),flex-basis .18s steps(4,end),opacity .12s;touch-action:pan-x}
+.music-controls:hover .volume-control input,.music-controls:focus-within .volume-control input{width:76px!important;flex:0 0 76px!important;opacity:1}
 .music-credit{position:fixed;z-index:35;left:calc(env(safe-area-inset-left,0px) + 8px)!important;right:auto!important;top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 49px)!important;max-width:none;font-size:6px!important;line-height:1.15;white-space:nowrap;text-align:left}
 @media (max-width:900px) and (pointer:coarse){.music-controls,.music-credit{display:none!important}}
 .phone-device .music-controls,.phone-device .music-credit{display:none!important}
